@@ -1,0 +1,14 @@
+/*
+    Isto é um teste. Se quiseres ver a funcionar. A tipagem a funcionar corretamente
+*/
+se verdade entao
+(
+    def x = 1;
+    mostra x
+)
+senao
+(
+    def x = 1;
+    mostra x
+)
+testar
