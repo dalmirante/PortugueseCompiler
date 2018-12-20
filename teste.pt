@@ -6,9 +6,4 @@ se verdade entao
     def x = 1;
     mostra x
 )
-senao
-(
-    def x = 1;
-    mostra x
-)
 testar

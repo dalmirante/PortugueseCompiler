@@ -25,7 +25,7 @@ seq:
     | s = stmts EOF {List.rev s}
     ;
 
-stmts: s = stmt                        { [s] }
+stmts: s = stmt                           { [s] }
     | s1 = stmts SEMICOLON s2 = stmt      { s2 :: s1 }
     ;
 
@@ -36,8 +36,8 @@ expr: c = CST                           { Cst c }
       ;
 
 
-stmt: PRINT e = expr                                         { Print e }
-    | SET i = IDENT EQ e = expr                              { Set(i, e) }
+stmt: PRINT e = expr                                        { Print e }
+    | SET i = IDENT EQ e = expr                             { Set(i, e) }
     | IF e = expr THEN LP s = stmts RP TEST                        { If(e, List.rev s) }
     | IF e = expr THEN LP s1 = stmts RP ELSE LP s2 = stmts RP TEST { IfElse(e, List.rev s1, List.rev s2) }
     ;

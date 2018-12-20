@@ -18,7 +18,9 @@ let rec type_expression ctx = function
 	begin
 		let typee1 = type_expression ctx e1 in
 		let typee2 = type_expression ctx e2 in
-		if(typee1 = Tbool && typee2 = typee1) then typee1 else (raise (Type_Error "Esperava tipo BOOL, mas foi dado INT."))
+		match o with
+		Beq | Leq | Bg | Ls -> if(typee1 = Tint && typee1 = typee2) then Tbool else (raise (Type_Error "Esperava INT, mas foi dado BOOL."))
+		| _ -> if(typee1 = Tbool && typee2 = typee1) then typee1 else (raise (Type_Error "Esperava tipo BOOL, mas foi dado INT."))
 	end
 	(* Vou verificar se a variável foi previamente definida para ir buscar o tipo *)
 	| Ident n -> 
@@ -32,7 +34,7 @@ let rec type_expression ctx = function
 	| Op (o, e1, e2) ->
 		let typee1 = type_expression ctx e1 in 
 		let typee2 = type_expression ctx e2 in
-			if( typee1 = Tint && typee2 = typee1) then typee1 else (raise (Type_Error "Esperava tipo INT, mas foi dado BOOL."))
+		if( typee1 = Tint && typee2 = typee1) then typee1 else (raise (Type_Error "Esperava tipo INT, mas foi dado BOOL."))
 
 let rec stmt_type ctx = function
 	(* As stmt não têm tipo, ou seja, não retornam nada. PRINT é to tipo UNIT, só tenhos de virificar o que está à frente*)

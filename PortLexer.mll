@@ -32,6 +32,10 @@ rule token = parse
     | ")" {RP}
     | "/*" {comment lexbuf}
     | "=" {EQ}
+    | "<=" {LEQ}
+    | ">=" {BEQ}
+    | ">" {BIG}
+    | "<" {LESS}
     | eof {EOF}
     | integer as i { CST (Int (int_of_string i) )}
     | ";" {SEMICOLON}
