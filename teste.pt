@@ -5,4 +5,22 @@ mostra x;
 mostra y e x;
 mostra y ou x;
 mostra z + 2;
-mostra z
+se z <= 2 entao
+(
+    mostra 1
+)
+testar;
+se 2 <= 3 entao
+(
+    mostra verdade
+)
+testar;
+se 2 >= 3 entao
+(
+    mostra 1
+)
+senao
+(
+    mostra falso
+)
+testar

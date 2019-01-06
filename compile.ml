@@ -5,7 +5,7 @@ open Typing
 exception Compile_Error of string
 
 let (variables: (string, unit) Hashtbl.t) = Hashtbl.create 17 
-let contIfs = 0
+let contIfs = ref 0
 
 let rec expr_to_string = function
 Cst i ->
@@ -85,10 +85,23 @@ let rec compile_stmt ctxType = function
             Hashtbl.replace variables id ();
             code;
     | If (e1, s1) -> 
+    begin
+        (fun a -> a := !a +1) contIfs;
         let code = List.map (compile_stmt ctxType) s1 in
         let code = List.fold_right (++) code nop in
-            compile_expr e1 ++ beq t0 zero "continue" ++ code ++ label "continue"
-    | _ -> nop
+            compile_expr e1 ++ beq t0 zero ("continue" ^ expr_to_string (Cst(Int !contIfs))) ++ code ++ label ("continue" ^ expr_to_string (Cst(Int !contIfs)))
+    end
+    | IfElse (e, s1, s2) ->
+        (fun a -> a := !a +1) contIfs;
+        let stmt1 = List.map (compile_stmt ctxType) s1 in
+        let stmt1 = List.fold_right (++) stmt1 nop in
+        let stmt2 = List.map (compile_stmt ctxType) s2 in
+        let stmt2 = List.fold_right (++) stmt2 nop in
+            compile_expr e ++ beq t0 zero ("else" ^ expr_to_string (Cst(Int !contIfs))) ++ 
+                stmt1 ++ j alab ("exit" ^ expr_to_string (Cst(Int !contIfs))) ++ 
+                label ("else" ^ expr_to_string (Cst(Int !contIfs))) ++ 
+                stmt2 ++ label ("exit" ^ expr_to_string (Cst(Int !contIfs)))
+    | Nop _ -> nop
                 
 
 let compile_prog p ctxType = 

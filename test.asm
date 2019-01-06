@@ -63,14 +63,70 @@ main:
 	la $a0, newline
 	li $v0, 4
 	syscall
-#Showing z
-	li $v0, 1
 	lw $t0, z
 	lw $a0, z
+	sw $t0, 4($sp)
+	li $t0, 2
+	li $a0, 2
+	move $t1, $t0
+	lw $t0, 4($sp)
+	sle $t0, $t0, $t1
+	beq $t0, $zero, continue1
+#Showing 1
+	li $v0, 1
+	li $t0, 1
+	li $a0, 1
 	syscall
 	la $a0, newline
 	li $v0, 4
 	syscall
+continue1:
+	li $t0, 2
+	li $a0, 2
+	sw $t0, 4($sp)
+	li $t0, 3
+	li $a0, 3
+	move $t1, $t0
+	lw $t0, 4($sp)
+	sle $t0, $t0, $t1
+	beq $t0, $zero, continue2
+#Showing verdade
+	li $v0, 4
+	li $t0, 1
+	jal print
+	syscall
+	la $a0, newline
+	li $v0, 4
+	syscall
+continue2:
+	li $t0, 2
+	li $a0, 2
+	sw $t0, 4($sp)
+	li $t0, 3
+	li $a0, 3
+	move $t1, $t0
+	lw $t0, 4($sp)
+	sge $t0, $t0, $t1
+	beq $t0, $zero, else3
+#Showing verdade
+	li $v0, 4
+	li $t0, 1
+	jal print
+	syscall
+	la $a0, newline
+	li $v0, 4
+	syscall
+	j exit3
+else3:
+#Showing falso
+	li $v0, 4
+	li $t0, 0
+	jal print
+	syscall
+	la $a0, newline
+	li $v0, 4
+	syscall
+exit3:
 	j end
 print:
 	move $t4, $ra
