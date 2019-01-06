@@ -58,8 +58,8 @@ let rec compile_expr = function
     begin
         match i with
              Int j -> li t0 j ++ li a0 j
-             | Bool true -> la a0 alab "true" ++ li t0 1
-             | _ -> la a0 alab "false" ++ li t0 0
+             | Bool true -> li t0 1
+             | _ -> li t0 0
     end
     | Ident i ->
         if Hashtbl.mem variables i then lw t0 alab i ++ lw a0 alab i else li a0 0
@@ -99,9 +99,9 @@ let rec compile_stmt ctxType = function
             Hashtbl.replace variables id ();
             code;
     | If (e1, s1) -> 
-    let code = List.map (compile_stmt ctxType) s1 in
-    let code = List.fold_right (++) code nop in
-        compile_expr e1 ++ beq t0 zero "continue" ++ code ++ label "continue"
+        let code = List.map (compile_stmt ctxType) s1 in
+        let code = List.fold_right (++) code nop in
+            compile_expr e1 ++ beq t0 zero "continue" ++ code ++ label "continue"
     | _ -> nop
                 
 

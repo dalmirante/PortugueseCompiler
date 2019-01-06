@@ -1,6 +1,8 @@
-se falso e verdade entao
-(
-    mostra 1
-)
-testar;
-mostra 2
+def x = verdade;
+def y = falso;
+def z = 1;
+mostra x;
+mostra y e x;
+mostra y ou x;
+mostra z + 2;
+mostra z
