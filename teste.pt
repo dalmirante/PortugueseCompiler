@@ -1,9 +1,12 @@
-/*
-    Isto é um teste. Se quiseres ver a funcionar. A tipagem a funcionar corretamente
-*/
-se verdade entao
-(
-    def x = 1;
-    mostra x
-)
-testar
+def x = verdade;
+def y = falso;
+def z = 1;
+def w = 2;
+mostra x;
+mostra y;
+mostra x;
+mostra z;
+mostra x e y;
+mostra x ou y;
+mostra z + w;
+mostra z * w

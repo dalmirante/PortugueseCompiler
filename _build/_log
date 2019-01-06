@@ -1,0 +1,54 @@
+### Starting build.
+# Target: main.ml.depends, tags: { extension:ml, file:main.ml, ocaml, ocamldep, quiet }
+/Users/DiogoSilva/.opam/4.06.1/bin/ocamldep.opt -modules main.ml > main.ml.depends # cached
+# Target: compile.ml.depends, tags: { extension:ml, file:compile.ml, ocaml, ocamldep, quiet }
+/Users/DiogoSilva/.opam/4.06.1/bin/ocamldep.opt -modules compile.ml > compile.ml.depends
+# Target: ast.mli.depends, tags: { extension:mli, file:ast.mli, ocaml, ocamldep, quiet }
+/Users/DiogoSilva/.opam/4.06.1/bin/ocamldep.opt -modules ast.mli > ast.mli.depends # cached
+# Target: ast.cmi, tags: { byte, compile, extension:mli, file:ast.mli, interf, ocaml, quiet }
+/Users/DiogoSilva/.opam/4.06.1/bin/ocamlc.opt -c -o ast.cmi ast.mli # cached
+# Target: mips.mli.depends, tags: { extension:mli, file:mips.mli, ocaml, ocamldep, quiet }
+/Users/DiogoSilva/.opam/4.06.1/bin/ocamldep.opt -modules mips.mli > mips.mli.depends # cached
+# Target: mips.cmi, tags: { byte, compile, extension:mli, file:mips.mli, interf, ocaml, quiet }
+/Users/DiogoSilva/.opam/4.06.1/bin/ocamlc.opt -c -o mips.cmi mips.mli # cached
+# Target: typing.ml.depends, tags: { extension:ml, file:typing.ml, ocaml, ocamldep, quiet }
+/Users/DiogoSilva/.opam/4.06.1/bin/ocamldep.opt -modules typing.ml > typing.ml.depends # cached
+# Target: typing.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:typing.cmo, file:typing.ml, implem, ocaml, quiet }
+/Users/DiogoSilva/.opam/4.06.1/bin/ocamlc.opt -c -o typing.cmo typing.ml # cached
+# Target: PortLexer.mll, tags: { extension:mll, file:PortLexer.mll, lexer, ocaml, ocamllex, quiet }
+/Users/DiogoSilva/.opam/4.06.1/bin/ocamllex.opt -q PortLexer.mll # cached
+# Target: PortLexer.ml.depends, tags: { extension:ml, file:PortLexer.ml, ocaml, ocamldep, quiet }
+/Users/DiogoSilva/.opam/4.06.1/bin/ocamldep.opt -modules PortLexer.ml > PortLexer.ml.depends # cached
+# Target: PortParser.mly.depends, tags: { extension:mly, file:PortParser.mly, infer, menhir_ocamldep, ocaml, ocamldep, quiet }
+menhir --raw-depend --ocamldep '/Users/DiogoSilva/.opam/4.06.1/bin/ocamldep.opt -modules' PortParser.mly > PortParser.mly.depends # cached
+# Target: PortParser.mly, tags: { byte, compile, extension:ml, extension:mly, file:PortParser.ml, file:PortParser.mly, infer, menhir, ocaml, parser, quiet }
+menhir --ocamlc /Users/DiogoSilva/.opam/4.06.1/bin/ocamlc.opt --infer PortParser.mly # cached
+# Target: PortParser.mli.depends, tags: { extension:mli, file:PortParser.mli, ocaml, ocamldep, quiet }
+/Users/DiogoSilva/.opam/4.06.1/bin/ocamldep.opt -modules PortParser.mli > PortParser.mli.depends # cached
+# Target: PortParser.cmi, tags: { byte, compile, extension:mli, file:PortParser.mli, interf, ocaml, quiet }
+/Users/DiogoSilva/.opam/4.06.1/bin/ocamlc.opt -c -o PortParser.cmi PortParser.mli # cached
+# Target: PortLexer.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:PortLexer.cmo, file:PortLexer.ml, implem, ocaml, quiet }
+/Users/DiogoSilva/.opam/4.06.1/bin/ocamlc.opt -c -o PortLexer.cmo PortLexer.ml # cached
+# Target: compile.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:compile.cmo, file:compile.ml, implem, ocaml, quiet }
+/Users/DiogoSilva/.opam/4.06.1/bin/ocamlc.opt -c -o compile.cmo compile.ml
+# Target: main.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:main.cmo, file:main.ml, implem, ocaml, quiet }
+/Users/DiogoSilva/.opam/4.06.1/bin/ocamlc.opt -c -o main.cmo main.ml # cached
+# Target: mips.ml.depends, tags: { extension:ml, file:mips.ml, ocaml, ocamldep, quiet }
+/Users/DiogoSilva/.opam/4.06.1/bin/ocamldep.opt -modules mips.ml > mips.ml.depends # cached
+# Target: mips.cmx, tags: { compile, extension:cmx, extension:ml, file:mips.cmx, file:mips.ml, implem, native, ocaml, quiet }
+/Users/DiogoSilva/.opam/4.06.1/bin/ocamlopt.opt -c -o mips.cmx mips.ml # cached
+# Target: typing.cmx, tags: { compile, extension:cmx, extension:ml, file:typing.cmx, file:typing.ml, implem, native, ocaml, quiet }
+/Users/DiogoSilva/.opam/4.06.1/bin/ocamlopt.opt -c -o typing.cmx typing.ml # cached
+# Target: PortParser.ml.depends, tags: { extension:ml, file:PortParser.ml, ocaml, ocamldep, quiet }
+/Users/DiogoSilva/.opam/4.06.1/bin/ocamldep.opt -modules PortParser.ml > PortParser.ml.depends # cached
+# Target: PortParser.cmx, tags: { compile, extension:cmx, extension:ml, file:PortParser.cmx, file:PortParser.ml, implem, native, ocaml, quiet }
+/Users/DiogoSilva/.opam/4.06.1/bin/ocamlopt.opt -c -o PortParser.cmx PortParser.ml # cached
+# Target: PortLexer.cmx, tags: { compile, extension:cmx, extension:ml, file:PortLexer.cmx, file:PortLexer.ml, implem, native, ocaml, quiet }
+/Users/DiogoSilva/.opam/4.06.1/bin/ocamlopt.opt -c -o PortLexer.cmx PortLexer.ml # cached
+# Target: compile.cmx, tags: { compile, extension:cmx, extension:ml, file:compile.cmx, file:compile.ml, implem, native, ocaml, quiet }
+/Users/DiogoSilva/.opam/4.06.1/bin/ocamlopt.opt -c -o compile.cmx compile.ml
+# Target: main.cmx, tags: { compile, extension:cmx, extension:ml, file:main.cmx, file:main.ml, implem, native, ocaml, quiet }
+/Users/DiogoSilva/.opam/4.06.1/bin/ocamlopt.opt -c -o main.cmx main.ml # cached
+# Target: main.native, tags: { dont_link_with, extension:native, file:main.native, link, native, ocaml, program, quiet }
+/Users/DiogoSilva/.opam/4.06.1/bin/ocamlopt.opt PortParser.cmx PortLexer.cmx mips.cmx typing.cmx compile.cmx main.cmx -o main.native
+# Compilation successful.
