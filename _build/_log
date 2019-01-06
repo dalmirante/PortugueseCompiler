@@ -32,7 +32,7 @@ menhir --ocamlc /Users/DiogoSilva/.opam/4.06.1/bin/ocamlc.opt --infer PortParser
 # Target: compile.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:compile.cmo, file:compile.ml, implem, ocaml, quiet }
 /Users/DiogoSilva/.opam/4.06.1/bin/ocamlc.opt -c -o compile.cmo compile.ml
 # Target: main.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:main.cmo, file:main.ml, implem, ocaml, quiet }
-/Users/DiogoSilva/.opam/4.06.1/bin/ocamlc.opt -c -o main.cmo main.ml # cached
+/Users/DiogoSilva/.opam/4.06.1/bin/ocamlc.opt -c -o main.cmo main.ml
 # Target: mips.ml.depends, tags: { extension:ml, file:mips.ml, ocaml, ocamldep, quiet }
 /Users/DiogoSilva/.opam/4.06.1/bin/ocamldep.opt -modules mips.ml > mips.ml.depends # cached
 # Target: mips.cmx, tags: { compile, extension:cmx, extension:ml, file:mips.cmx, file:mips.ml, implem, native, ocaml, quiet }
@@ -48,7 +48,7 @@ menhir --ocamlc /Users/DiogoSilva/.opam/4.06.1/bin/ocamlc.opt --infer PortParser
 # Target: compile.cmx, tags: { compile, extension:cmx, extension:ml, file:compile.cmx, file:compile.ml, implem, native, ocaml, quiet }
 /Users/DiogoSilva/.opam/4.06.1/bin/ocamlopt.opt -c -o compile.cmx compile.ml
 # Target: main.cmx, tags: { compile, extension:cmx, extension:ml, file:main.cmx, file:main.ml, implem, native, ocaml, quiet }
-/Users/DiogoSilva/.opam/4.06.1/bin/ocamlopt.opt -c -o main.cmx main.ml # cached
+/Users/DiogoSilva/.opam/4.06.1/bin/ocamlopt.opt -c -o main.cmx main.ml
 # Target: main.native, tags: { dont_link_with, extension:native, file:main.native, link, native, ocaml, program, quiet }
 /Users/DiogoSilva/.opam/4.06.1/bin/ocamlopt.opt PortParser.cmx PortLexer.cmx mips.cmx typing.cmx compile.cmx main.cmx -o main.native
 # Compilation successful.

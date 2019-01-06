@@ -1,12 +1,6 @@
-def x = verdade;
-def y = falso;
-def z = 1;
-def w = 2;
-mostra x;
-mostra y;
-mostra x;
-mostra z;
-mostra x e y;
-mostra x ou y;
-mostra z + w;
-mostra z * w
+se falso e verdade entao
+(
+    mostra 1
+)
+testar;
+mostra 2

@@ -7,17 +7,18 @@ exception Compile_Error of string
 let (variables: (string, unit) Hashtbl.t) = Hashtbl.create 17 
 let contIfs = 0
 
-let rec compile_if_expr =
+(*let rec compile_if_expr = function
     Cst i -> compile_expr i
     | Ident id -> compile_expr id
     | Bop (o, e1, e2) ->
     begin
         let x = compile_if_expr e1 ++ sw t0 areg (4, sp) in
         let y = compile_if_expr e2 ++ lw t1 areg (4, sp) in
+        let state = 
             match o with
-                And -> x ++ y ++ _and t0 t0 t1 ++ jal "test_if"
+                And -> x ++ y ++ _and t0 t0 t1 ++ bn
                 | _ -> nop
-    end
+    end*)
 
 
 let rec expr_to_string = function
@@ -76,19 +77,19 @@ let rec compile_expr = function
         let x = compile_expr e1 ++ sw t0 areg(4, sp) in
         let y = compile_expr e2 ++ move t1 t0 ++ lw t0 areg(4, sp) in
         match o with
-            And -> x ++ y ++ and_ t0 t1 t0 ++ jal "test_print"
-            | Or -> x ++ y ++ or_ t0 t1 t0 ++ jal "test_print"
-            | Beq -> x ++ y ++ sge t0 t0 oreg t1 ++ jal "test_print"
-            | Leq -> x ++ y ++ sle t0 t0 oreg t1 ++ jal "test_print"
-            | Ls -> x ++ y ++ slt t0 t0 oreg t1 ++ jal "test_print" 
-            | Bg -> x ++ y ++ sgt t0 t0 oreg t1 ++ jal "test_print"
+            And -> x ++ y ++ and_ t0 t1 t0
+            | Or -> x ++ y ++ or_ t0 t1 t0
+            | Beq -> x ++ y ++ sge t0 t0 oreg t1
+            | Leq -> x ++ y ++ sle t0 t0 oreg t1
+            | Ls -> x ++ y ++ slt t0 t0 oreg t1 
+            | Bg -> x ++ y ++ sgt t0 t0 oreg t1
 
-let compile_stmt ctxType= function
+let rec compile_stmt ctxType = function
     Print x -> 
     begin
         match type_expression ctxType x with
         Tint -> comment ( "Showing " ^ (expr_to_string x) )++ li v0 1 ++(compile_expr x) ++ syscall ++ la a0 alab "newline" ++ li v0 4 ++ syscall
-        | Tbool -> comment ("Showing " ^ (expr_to_string x) ) ++ li v0 4 ++(compile_expr x) ++ syscall ++ la a0 alab "newline" ++ li v0 4 ++ syscall
+        | Tbool -> comment ("Showing " ^ (expr_to_string x) ) ++ li v0 4 ++(compile_expr x) ++ jal "print"++ syscall ++ la a0 alab "newline" ++ li v0 4 ++ syscall
         | _ -> nop
     end
 
@@ -97,7 +98,10 @@ let compile_stmt ctxType= function
         let code = comment ("Storing " ^ id) ++ value ++ sw t0 alab id in
             Hashtbl.replace variables id ();
             code;
-    (*| If (e1, s1) -> *)
+    | If (e1, s1) -> 
+    let code = List.map (compile_stmt ctxType) s1 in
+    let code = List.fold_right (++) code nop in
+        compile_expr e1 ++ beq t0 zero "continue" ++ code ++ label "continue"
     | _ -> nop
                 
 
@@ -110,10 +114,7 @@ let compile_prog p ctxType =
             addiu sp sp oi (-8) ++
             code ++
             j alab "end"++
-            label "test_if" ++
-            move t4 ra ++
-            bnez t0 ""
-            label "test_print" ++
+            label "print" ++
             move t4 ra ++
             bnez t0 "verdade" ++
             jal "prepare_return" ++
