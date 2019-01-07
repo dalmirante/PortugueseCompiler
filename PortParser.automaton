@@ -1,0 +1,571 @@
+State 0:
+seq' -> . seq [ # ]
+-- On SET shift to state 1
+-- On PRINT shift to state 27
+-- On IF shift to state 29
+-- On stmts shift to state 44
+-- On stmt shift to state 43
+-- On seq shift to state 46
+
+State 1:
+stmt -> SET . IDENT EQ expr [ SEMICOLON RP EOF ]
+-- On IDENT shift to state 2
+
+State 2:
+stmt -> SET IDENT . EQ expr [ SEMICOLON RP EOF ]
+-- On EQ shift to state 3
+
+State 3:
+stmt -> SET IDENT EQ . expr [ SEMICOLON RP EOF ]
+-- On IDENT shift to state 4
+-- On CST shift to state 5
+-- On expr shift to state 6
+
+State 4:
+expr -> IDENT . [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+-- On TIMES reduce production expr -> IDENT 
+-- On THEN reduce production expr -> IDENT 
+-- On SEMICOLON reduce production expr -> IDENT 
+-- On RP reduce production expr -> IDENT 
+-- On PLUS reduce production expr -> IDENT 
+-- On OR reduce production expr -> IDENT 
+-- On MINUS reduce production expr -> IDENT 
+-- On LESS reduce production expr -> IDENT 
+-- On LEQ reduce production expr -> IDENT 
+-- On EOF reduce production expr -> IDENT 
+-- On DIV reduce production expr -> IDENT 
+-- On BIG reduce production expr -> IDENT 
+-- On BEQ reduce production expr -> IDENT 
+-- On AND reduce production expr -> IDENT 
+
+State 5:
+expr -> CST . [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+-- On TIMES reduce production expr -> CST 
+-- On THEN reduce production expr -> CST 
+-- On SEMICOLON reduce production expr -> CST 
+-- On RP reduce production expr -> CST 
+-- On PLUS reduce production expr -> CST 
+-- On OR reduce production expr -> CST 
+-- On MINUS reduce production expr -> CST 
+-- On LESS reduce production expr -> CST 
+-- On LEQ reduce production expr -> CST 
+-- On EOF reduce production expr -> CST 
+-- On DIV reduce production expr -> CST 
+-- On BIG reduce production expr -> CST 
+-- On BEQ reduce production expr -> CST 
+-- On AND reduce production expr -> CST 
+
+State 6:
+expr -> expr . AND expr [ TIMES SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . OR expr [ TIMES SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . BEQ expr [ TIMES SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . BIG expr [ TIMES SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . LESS expr [ TIMES SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . LEQ expr [ TIMES SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . PLUS expr [ TIMES SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . MINUS expr [ TIMES SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . DIV expr [ TIMES SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . TIMES expr [ TIMES SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+stmt -> SET IDENT EQ expr . [ SEMICOLON RP EOF ]
+-- On TIMES shift to state 7
+-- On PLUS shift to state 9
+-- On OR shift to state 13
+-- On MINUS shift to state 15
+-- On LESS shift to state 17
+-- On LEQ shift to state 19
+-- On DIV shift to state 11
+-- On BIG shift to state 21
+-- On BEQ shift to state 23
+-- On AND shift to state 25
+-- On SEMICOLON reduce production stmt -> SET IDENT EQ expr 
+-- On RP reduce production stmt -> SET IDENT EQ expr 
+-- On EOF reduce production stmt -> SET IDENT EQ expr 
+
+State 7:
+expr -> expr TIMES . expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+-- On IDENT shift to state 4
+-- On CST shift to state 5
+-- On expr shift to state 8
+
+State 8:
+expr -> expr . AND expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . OR expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . BEQ expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . BIG expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . LESS expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . LEQ expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . PLUS expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . MINUS expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . DIV expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . TIMES expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr TIMES expr . [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+-- On TIMES reduce production expr -> expr TIMES expr 
+-- On THEN reduce production expr -> expr TIMES expr 
+-- On SEMICOLON reduce production expr -> expr TIMES expr 
+-- On RP reduce production expr -> expr TIMES expr 
+-- On PLUS reduce production expr -> expr TIMES expr 
+-- On OR reduce production expr -> expr TIMES expr 
+-- On MINUS reduce production expr -> expr TIMES expr 
+-- On LESS reduce production expr -> expr TIMES expr 
+-- On LEQ reduce production expr -> expr TIMES expr 
+-- On EOF reduce production expr -> expr TIMES expr 
+-- On DIV reduce production expr -> expr TIMES expr 
+-- On BIG reduce production expr -> expr TIMES expr 
+-- On BEQ reduce production expr -> expr TIMES expr 
+-- On AND reduce production expr -> expr TIMES expr 
+
+State 9:
+expr -> expr PLUS . expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+-- On IDENT shift to state 4
+-- On CST shift to state 5
+-- On expr shift to state 10
+
+State 10:
+expr -> expr . AND expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . OR expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . BEQ expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . BIG expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . LESS expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . LEQ expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . PLUS expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr PLUS expr . [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . MINUS expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . DIV expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . TIMES expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+-- On TIMES shift to state 7
+-- On DIV shift to state 11
+-- On THEN reduce production expr -> expr PLUS expr 
+-- On SEMICOLON reduce production expr -> expr PLUS expr 
+-- On RP reduce production expr -> expr PLUS expr 
+-- On PLUS reduce production expr -> expr PLUS expr 
+-- On OR reduce production expr -> expr PLUS expr 
+-- On MINUS reduce production expr -> expr PLUS expr 
+-- On LESS reduce production expr -> expr PLUS expr 
+-- On LEQ reduce production expr -> expr PLUS expr 
+-- On EOF reduce production expr -> expr PLUS expr 
+-- On BIG reduce production expr -> expr PLUS expr 
+-- On BEQ reduce production expr -> expr PLUS expr 
+-- On AND reduce production expr -> expr PLUS expr 
+
+State 11:
+expr -> expr DIV . expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+-- On IDENT shift to state 4
+-- On CST shift to state 5
+-- On expr shift to state 12
+
+State 12:
+expr -> expr . AND expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . OR expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . BEQ expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . BIG expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . LESS expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . LEQ expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . PLUS expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . MINUS expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . DIV expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr DIV expr . [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . TIMES expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+-- On TIMES reduce production expr -> expr DIV expr 
+-- On THEN reduce production expr -> expr DIV expr 
+-- On SEMICOLON reduce production expr -> expr DIV expr 
+-- On RP reduce production expr -> expr DIV expr 
+-- On PLUS reduce production expr -> expr DIV expr 
+-- On OR reduce production expr -> expr DIV expr 
+-- On MINUS reduce production expr -> expr DIV expr 
+-- On LESS reduce production expr -> expr DIV expr 
+-- On LEQ reduce production expr -> expr DIV expr 
+-- On EOF reduce production expr -> expr DIV expr 
+-- On DIV reduce production expr -> expr DIV expr 
+-- On BIG reduce production expr -> expr DIV expr 
+-- On BEQ reduce production expr -> expr DIV expr 
+-- On AND reduce production expr -> expr DIV expr 
+
+State 13:
+expr -> expr OR . expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+-- On IDENT shift to state 4
+-- On CST shift to state 5
+-- On expr shift to state 14
+
+State 14:
+expr -> expr . AND expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . OR expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr OR expr . [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . BEQ expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . BIG expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . LESS expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . LEQ expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . PLUS expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . MINUS expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . DIV expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . TIMES expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+-- On TIMES shift to state 7
+-- On PLUS shift to state 9
+-- On MINUS shift to state 15
+-- On DIV shift to state 11
+-- On THEN reduce production expr -> expr OR expr 
+-- On SEMICOLON reduce production expr -> expr OR expr 
+-- On RP reduce production expr -> expr OR expr 
+-- On OR reduce production expr -> expr OR expr 
+-- On LESS reduce production expr -> expr OR expr 
+-- On LEQ reduce production expr -> expr OR expr 
+-- On EOF reduce production expr -> expr OR expr 
+-- On BIG reduce production expr -> expr OR expr 
+-- On BEQ reduce production expr -> expr OR expr 
+-- On AND reduce production expr -> expr OR expr 
+
+State 15:
+expr -> expr MINUS . expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+-- On IDENT shift to state 4
+-- On CST shift to state 5
+-- On expr shift to state 16
+
+State 16:
+expr -> expr . AND expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . OR expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . BEQ expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . BIG expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . LESS expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . LEQ expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . PLUS expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . MINUS expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr MINUS expr . [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . DIV expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . TIMES expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+-- On TIMES shift to state 7
+-- On DIV shift to state 11
+-- On THEN reduce production expr -> expr MINUS expr 
+-- On SEMICOLON reduce production expr -> expr MINUS expr 
+-- On RP reduce production expr -> expr MINUS expr 
+-- On PLUS reduce production expr -> expr MINUS expr 
+-- On OR reduce production expr -> expr MINUS expr 
+-- On MINUS reduce production expr -> expr MINUS expr 
+-- On LESS reduce production expr -> expr MINUS expr 
+-- On LEQ reduce production expr -> expr MINUS expr 
+-- On EOF reduce production expr -> expr MINUS expr 
+-- On BIG reduce production expr -> expr MINUS expr 
+-- On BEQ reduce production expr -> expr MINUS expr 
+-- On AND reduce production expr -> expr MINUS expr 
+
+State 17:
+expr -> expr LESS . expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+-- On IDENT shift to state 4
+-- On CST shift to state 5
+-- On expr shift to state 18
+
+State 18:
+expr -> expr . AND expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . OR expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . BEQ expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . BIG expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . LESS expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr LESS expr . [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . LEQ expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . PLUS expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . MINUS expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . DIV expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . TIMES expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+-- On TIMES shift to state 7
+-- On PLUS shift to state 9
+-- On MINUS shift to state 15
+-- On DIV shift to state 11
+-- On THEN reduce production expr -> expr LESS expr 
+-- On SEMICOLON reduce production expr -> expr LESS expr 
+-- On RP reduce production expr -> expr LESS expr 
+-- On OR reduce production expr -> expr LESS expr 
+-- On LESS reduce production expr -> expr LESS expr 
+-- On LEQ reduce production expr -> expr LESS expr 
+-- On EOF reduce production expr -> expr LESS expr 
+-- On BIG reduce production expr -> expr LESS expr 
+-- On BEQ reduce production expr -> expr LESS expr 
+-- On AND reduce production expr -> expr LESS expr 
+
+State 19:
+expr -> expr LEQ . expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+-- On IDENT shift to state 4
+-- On CST shift to state 5
+-- On expr shift to state 20
+
+State 20:
+expr -> expr . AND expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . OR expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . BEQ expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . BIG expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . LESS expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . LEQ expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr LEQ expr . [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . PLUS expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . MINUS expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . DIV expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . TIMES expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+-- On TIMES shift to state 7
+-- On PLUS shift to state 9
+-- On MINUS shift to state 15
+-- On DIV shift to state 11
+-- On THEN reduce production expr -> expr LEQ expr 
+-- On SEMICOLON reduce production expr -> expr LEQ expr 
+-- On RP reduce production expr -> expr LEQ expr 
+-- On OR reduce production expr -> expr LEQ expr 
+-- On LESS reduce production expr -> expr LEQ expr 
+-- On LEQ reduce production expr -> expr LEQ expr 
+-- On EOF reduce production expr -> expr LEQ expr 
+-- On BIG reduce production expr -> expr LEQ expr 
+-- On BEQ reduce production expr -> expr LEQ expr 
+-- On AND reduce production expr -> expr LEQ expr 
+
+State 21:
+expr -> expr BIG . expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+-- On IDENT shift to state 4
+-- On CST shift to state 5
+-- On expr shift to state 22
+
+State 22:
+expr -> expr . AND expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . OR expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . BEQ expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . BIG expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr BIG expr . [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . LESS expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . LEQ expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . PLUS expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . MINUS expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . DIV expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . TIMES expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+-- On TIMES shift to state 7
+-- On PLUS shift to state 9
+-- On MINUS shift to state 15
+-- On DIV shift to state 11
+-- On THEN reduce production expr -> expr BIG expr 
+-- On SEMICOLON reduce production expr -> expr BIG expr 
+-- On RP reduce production expr -> expr BIG expr 
+-- On OR reduce production expr -> expr BIG expr 
+-- On LESS reduce production expr -> expr BIG expr 
+-- On LEQ reduce production expr -> expr BIG expr 
+-- On EOF reduce production expr -> expr BIG expr 
+-- On BIG reduce production expr -> expr BIG expr 
+-- On BEQ reduce production expr -> expr BIG expr 
+-- On AND reduce production expr -> expr BIG expr 
+
+State 23:
+expr -> expr BEQ . expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+-- On IDENT shift to state 4
+-- On CST shift to state 5
+-- On expr shift to state 24
+
+State 24:
+expr -> expr . AND expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . OR expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . BEQ expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr BEQ expr . [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . BIG expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . LESS expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . LEQ expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . PLUS expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . MINUS expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . DIV expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . TIMES expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+-- On TIMES shift to state 7
+-- On PLUS shift to state 9
+-- On MINUS shift to state 15
+-- On DIV shift to state 11
+-- On THEN reduce production expr -> expr BEQ expr 
+-- On SEMICOLON reduce production expr -> expr BEQ expr 
+-- On RP reduce production expr -> expr BEQ expr 
+-- On OR reduce production expr -> expr BEQ expr 
+-- On LESS reduce production expr -> expr BEQ expr 
+-- On LEQ reduce production expr -> expr BEQ expr 
+-- On EOF reduce production expr -> expr BEQ expr 
+-- On BIG reduce production expr -> expr BEQ expr 
+-- On BEQ reduce production expr -> expr BEQ expr 
+-- On AND reduce production expr -> expr BEQ expr 
+
+State 25:
+expr -> expr AND . expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+-- On IDENT shift to state 4
+-- On CST shift to state 5
+-- On expr shift to state 26
+
+State 26:
+expr -> expr . AND expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr AND expr . [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . OR expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . BEQ expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . BIG expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . LESS expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . LEQ expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . PLUS expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . MINUS expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . DIV expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . TIMES expr [ TIMES THEN SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+-- On TIMES shift to state 7
+-- On PLUS shift to state 9
+-- On MINUS shift to state 15
+-- On DIV shift to state 11
+-- On THEN reduce production expr -> expr AND expr 
+-- On SEMICOLON reduce production expr -> expr AND expr 
+-- On RP reduce production expr -> expr AND expr 
+-- On OR reduce production expr -> expr AND expr 
+-- On LESS reduce production expr -> expr AND expr 
+-- On LEQ reduce production expr -> expr AND expr 
+-- On EOF reduce production expr -> expr AND expr 
+-- On BIG reduce production expr -> expr AND expr 
+-- On BEQ reduce production expr -> expr AND expr 
+-- On AND reduce production expr -> expr AND expr 
+
+State 27:
+stmt -> PRINT . expr [ SEMICOLON RP EOF ]
+-- On IDENT shift to state 4
+-- On CST shift to state 5
+-- On expr shift to state 28
+
+State 28:
+expr -> expr . AND expr [ TIMES SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . OR expr [ TIMES SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . BEQ expr [ TIMES SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . BIG expr [ TIMES SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . LESS expr [ TIMES SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . LEQ expr [ TIMES SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . PLUS expr [ TIMES SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . MINUS expr [ TIMES SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . DIV expr [ TIMES SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+expr -> expr . TIMES expr [ TIMES SEMICOLON RP PLUS OR MINUS LESS LEQ EOF DIV BIG BEQ AND ]
+stmt -> PRINT expr . [ SEMICOLON RP EOF ]
+-- On TIMES shift to state 7
+-- On PLUS shift to state 9
+-- On OR shift to state 13
+-- On MINUS shift to state 15
+-- On LESS shift to state 17
+-- On LEQ shift to state 19
+-- On DIV shift to state 11
+-- On BIG shift to state 21
+-- On BEQ shift to state 23
+-- On AND shift to state 25
+-- On SEMICOLON reduce production stmt -> PRINT expr 
+-- On RP reduce production stmt -> PRINT expr 
+-- On EOF reduce production stmt -> PRINT expr 
+
+State 29:
+stmt -> IF . expr THEN LP stmts RP TEST [ SEMICOLON RP EOF ]
+stmt -> IF . expr THEN LP stmts RP ELSE LP stmts RP TEST [ SEMICOLON RP EOF ]
+-- On IDENT shift to state 4
+-- On CST shift to state 5
+-- On expr shift to state 30
+
+State 30:
+expr -> expr . AND expr [ TIMES THEN PLUS OR MINUS LESS LEQ DIV BIG BEQ AND ]
+expr -> expr . OR expr [ TIMES THEN PLUS OR MINUS LESS LEQ DIV BIG BEQ AND ]
+expr -> expr . BEQ expr [ TIMES THEN PLUS OR MINUS LESS LEQ DIV BIG BEQ AND ]
+expr -> expr . BIG expr [ TIMES THEN PLUS OR MINUS LESS LEQ DIV BIG BEQ AND ]
+expr -> expr . LESS expr [ TIMES THEN PLUS OR MINUS LESS LEQ DIV BIG BEQ AND ]
+expr -> expr . LEQ expr [ TIMES THEN PLUS OR MINUS LESS LEQ DIV BIG BEQ AND ]
+expr -> expr . PLUS expr [ TIMES THEN PLUS OR MINUS LESS LEQ DIV BIG BEQ AND ]
+expr -> expr . MINUS expr [ TIMES THEN PLUS OR MINUS LESS LEQ DIV BIG BEQ AND ]
+expr -> expr . DIV expr [ TIMES THEN PLUS OR MINUS LESS LEQ DIV BIG BEQ AND ]
+expr -> expr . TIMES expr [ TIMES THEN PLUS OR MINUS LESS LEQ DIV BIG BEQ AND ]
+stmt -> IF expr . THEN LP stmts RP TEST [ SEMICOLON RP EOF ]
+stmt -> IF expr . THEN LP stmts RP ELSE LP stmts RP TEST [ SEMICOLON RP EOF ]
+-- On TIMES shift to state 7
+-- On THEN shift to state 31
+-- On PLUS shift to state 9
+-- On OR shift to state 13
+-- On MINUS shift to state 15
+-- On LESS shift to state 17
+-- On LEQ shift to state 19
+-- On DIV shift to state 11
+-- On BIG shift to state 21
+-- On BEQ shift to state 23
+-- On AND shift to state 25
+
+State 31:
+stmt -> IF expr THEN . LP stmts RP TEST [ SEMICOLON RP EOF ]
+stmt -> IF expr THEN . LP stmts RP ELSE LP stmts RP TEST [ SEMICOLON RP EOF ]
+-- On LP shift to state 32
+
+State 32:
+stmt -> IF expr THEN LP . stmts RP TEST [ SEMICOLON RP EOF ]
+stmt -> IF expr THEN LP . stmts RP ELSE LP stmts RP TEST [ SEMICOLON RP EOF ]
+-- On SET shift to state 1
+-- On PRINT shift to state 27
+-- On IF shift to state 29
+-- On stmts shift to state 33
+-- On stmt shift to state 43
+
+State 33:
+stmt -> IF expr THEN LP stmts . RP TEST [ SEMICOLON RP EOF ]
+stmt -> IF expr THEN LP stmts . RP ELSE LP stmts RP TEST [ SEMICOLON RP EOF ]
+stmts -> stmts . SEMICOLON stmt [ SEMICOLON RP ]
+-- On SEMICOLON shift to state 34
+-- On RP shift to state 36
+
+State 34:
+stmts -> stmts SEMICOLON . stmt [ SEMICOLON RP EOF ]
+-- On SET shift to state 1
+-- On PRINT shift to state 27
+-- On IF shift to state 29
+-- On stmt shift to state 35
+
+State 35:
+stmts -> stmts SEMICOLON stmt . [ SEMICOLON RP EOF ]
+-- On SEMICOLON reduce production stmts -> stmts SEMICOLON stmt 
+-- On RP reduce production stmts -> stmts SEMICOLON stmt 
+-- On EOF reduce production stmts -> stmts SEMICOLON stmt 
+
+State 36:
+stmt -> IF expr THEN LP stmts RP . TEST [ SEMICOLON RP EOF ]
+stmt -> IF expr THEN LP stmts RP . ELSE LP stmts RP TEST [ SEMICOLON RP EOF ]
+-- On TEST shift to state 37
+-- On ELSE shift to state 38
+
+State 37:
+stmt -> IF expr THEN LP stmts RP TEST . [ SEMICOLON RP EOF ]
+-- On SEMICOLON reduce production stmt -> IF expr THEN LP stmts RP TEST 
+-- On RP reduce production stmt -> IF expr THEN LP stmts RP TEST 
+-- On EOF reduce production stmt -> IF expr THEN LP stmts RP TEST 
+
+State 38:
+stmt -> IF expr THEN LP stmts RP ELSE . LP stmts RP TEST [ SEMICOLON RP EOF ]
+-- On LP shift to state 39
+
+State 39:
+stmt -> IF expr THEN LP stmts RP ELSE LP . stmts RP TEST [ SEMICOLON RP EOF ]
+-- On SET shift to state 1
+-- On PRINT shift to state 27
+-- On IF shift to state 29
+-- On stmts shift to state 40
+-- On stmt shift to state 43
+
+State 40:
+stmt -> IF expr THEN LP stmts RP ELSE LP stmts . RP TEST [ SEMICOLON RP EOF ]
+stmts -> stmts . SEMICOLON stmt [ SEMICOLON RP ]
+-- On SEMICOLON shift to state 34
+-- On RP shift to state 41
+
+State 41:
+stmt -> IF expr THEN LP stmts RP ELSE LP stmts RP . TEST [ SEMICOLON RP EOF ]
+-- On TEST shift to state 42
+
+State 42:
+stmt -> IF expr THEN LP stmts RP ELSE LP stmts RP TEST . [ SEMICOLON RP EOF ]
+-- On SEMICOLON reduce production stmt -> IF expr THEN LP stmts RP ELSE LP stmts RP TEST 
+-- On RP reduce production stmt -> IF expr THEN LP stmts RP ELSE LP stmts RP TEST 
+-- On EOF reduce production stmt -> IF expr THEN LP stmts RP ELSE LP stmts RP TEST 
+
+State 43:
+stmts -> stmt . [ SEMICOLON RP EOF ]
+-- On SEMICOLON reduce production stmts -> stmt 
+-- On RP reduce production stmts -> stmt 
+-- On EOF reduce production stmts -> stmt 
+
+State 44:
+seq -> stmts . EOF [ # ]
+stmts -> stmts . SEMICOLON stmt [ SEMICOLON EOF ]
+-- On SEMICOLON shift to state 34
+-- On EOF shift to state 45
+
+State 45:
+seq -> stmts EOF . [ # ]
+-- On # reduce production seq -> stmts EOF 
+
+State 46:
+seq' -> seq . [ # ]
+-- On # accept seq
+

@@ -1,136 +1,36 @@
 .text
 main:
 	addiu $sp, $sp, -8
-#Storing x
-	li $t0, 1
-	sw $t0, x
-#Storing y
-	li $t0, 0
-	sw $t0, y
-#Storing z
-	li $t0, 1
-	li $a0, 1
-	sw $t0, z
-#Showing x
-	li $v0, 4
-	lw $t0, x
-	lw $a0, x
+#Valor 2 em If
+	li $t0, 0x3f800000
+	mtc1 $t0, $f12
+	mov.s $f0, $f12
+	li $t0, 0x40000000
+	mtc1 $t0, $f12
+	mov.s $f1, $f12
+	c.lt.s $f0, $f1
+	bc1f set_false
+	li $fp, 1
 	jal print
-	syscall
-	la $a0, newline
-	li $v0, 4
-	syscall
-#Showing y AND x
-	li $v0, 4
-	lw $t0, y
-	lw $a0, y
-	sw $t0, 4($sp)
-	lw $t0, x
-	lw $a0, x
-	move $t1, $t0
-	lw $t0, 4($sp)
-	and $t0, $t1, $t0
-	jal print
-	syscall
-	la $a0, newline
-	li $v0, 4
-	syscall
-#Showing y OR x
-	li $v0, 4
-	lw $t0, y
-	lw $a0, y
-	sw $t0, 4($sp)
-	lw $t0, x
-	lw $a0, x
-	move $t1, $t0
-	lw $t0, 4($sp)
-	or $t0, $t1, $t0
-	jal print
-	syscall
-	la $a0, newline
-	li $v0, 4
-	syscall
-#Showing z+2
-	li $v0, 1
-	lw $t0, z
-	lw $a0, z
-	sw $t0, 4($sp)
-	li $t0, 2
-	li $a0, 2
-	lw $t1, 4($sp)
-	add $a0, $t0, $t1
-	syscall
-	la $a0, newline
-	li $v0, 4
-	syscall
-	lw $t0, z
-	lw $a0, z
-	sw $t0, 4($sp)
-	li $t0, 2
-	li $a0, 2
-	move $t1, $t0
-	lw $t0, 4($sp)
-	sle $t0, $t0, $t1
-	beq $t0, $zero, continue1
-#Showing 1
-	li $v0, 1
-	li $t0, 1
-	li $a0, 1
-	syscall
-	la $a0, newline
-	li $v0, 4
-	syscall
-continue1:
-	li $t0, 2
-	li $a0, 2
-	sw $t0, 4($sp)
-	li $t0, 3
-	li $a0, 3
-	move $t1, $t0
-	lw $t0, 4($sp)
-	sle $t0, $t0, $t1
-	beq $t0, $zero, continue2
+	j continue2
+set_false:
+	li $fp, 0
+	beq $fp, $zero, continue2
 #Showing verdade
 	li $v0, 4
 	li $t0, 1
+	li $fp, 1
 	jal print
+continue2:
 	syscall
 	la $a0, newline
 	li $v0, 4
 	syscall
 continue2:
-	li $t0, 2
-	li $a0, 2
-	sw $t0, 4($sp)
-	li $t0, 3
-	li $a0, 3
-	move $t1, $t0
-	lw $t0, 4($sp)
-	sge $t0, $t0, $t1
-	beq $t0, $zero, else3
-#Showing verdade
-	li $v0, 4
-	li $t0, 1
-	jal print
-	syscall
-	la $a0, newline
-	li $v0, 4
-	syscall
-	j exit3
-else3:
-#Showing falso
-	li $v0, 4
-	li $t0, 0
-	jal print
-	syscall
-	la $a0, newline
-	li $v0, 4
-	syscall
-exit3:
 	j end
 print:
 	move $t4, $ra
-	bnez $t0, verdade
+	bnez $fp, verdade
 	jal prepare_return
 verdade:
 	jal print_true
@@ -150,12 +50,6 @@ prepare_return:
 end:
 	addiu $sp, $sp, 8
 .data
-x:
-	.space 4
-y:
-	.space 4
-z:
-	.space 4
 true:
 	.asciiz "verdade"
 false:

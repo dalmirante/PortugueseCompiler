@@ -19,6 +19,7 @@ let digit = ['0'-'9']
 let ident = letter (letter | digit | '_')*
 let integer = digit+
 let space = [' ' '\t']
+let floats = digit* + ['.'] + digit*
 
 rule token = parse
     | "\n" {newline lexbuf; token lexbuf}
@@ -38,6 +39,7 @@ rule token = parse
     | "<" {LESS}
     | eof {EOF}
     | integer as i { CST (Int (int_of_string i) )}
+    | floats as f { CST ( Float (float_of_string f) )}
     | ";" {SEMICOLON}
     | _ as c {raise (let x = (Printf.sprintf "%c" c) in (Lexing_error ("Valor " ^ x ^ " desconhecido")))}
 

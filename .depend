@@ -1,0 +1,15 @@
+PortLexer.cmo : PortParser.cmi
+PortLexer.cmx : PortParser.cmx
+PortParser.cmo : ast.cmi PortParser.cmi
+PortParser.cmx : ast.cmi PortParser.cmi
+PortParser.cmi : ast.cmi
+ast.cmi :
+compile.cmo : typing.cmo mips.cmi ast.cmi
+compile.cmx : typing.cmx mips.cmx ast.cmi
+main.cmo : typing.cmo PortParser.cmi PortLexer.cmo compile.cmo
+main.cmx : typing.cmx PortParser.cmx PortLexer.cmx compile.cmx
+mips.cmo : mips.cmi
+mips.cmx : mips.cmi
+mips.cmi :
+typing.cmo : ast.cmi
+typing.cmx : ast.cmi

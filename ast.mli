@@ -1,4 +1,4 @@
-type cst = None | Int of int | Bool of bool
+type cst = None | Int of int | Bool of bool | Float of float
 
 type op = Minus | Plus | Times | Div
 type bop = And | Or | Beq | Leq | Bg | Ls

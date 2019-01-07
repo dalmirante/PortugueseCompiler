@@ -1,26 +1,5 @@
-def x = verdade;
-def y = falso;
-def z = 1;
-mostra x;
-mostra y e x;
-mostra y ou x;
-mostra z + 2;
-se z <= 2 entao
-(
-    mostra 1
-)
-testar;
-se 2 <= 3 entao
+se 1.0 < 2.0 entao
 (
     mostra verdade
-)
-testar;
-se 2 >= 3 entao
-(
-    mostra 1
-)
-senao
-(
-    mostra falso
 )
 testar

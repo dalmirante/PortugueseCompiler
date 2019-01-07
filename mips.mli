@@ -99,6 +99,19 @@ val t1 : register
 val t2 : register
 val t3 : register
 val t4 : register
+val f0 : register
+val f1 : register
+val f2 : register
+val f3 : register
+val f4 : register
+val f5 : register
+val f6 : register
+val f7 : register
+val f8 : register
+val f9 : register
+val f10 : register
+val f11 : register
+val f12 : register
 val s0 : register
 val s1 : register
 val ra : register
@@ -130,6 +143,7 @@ val oi32 : int32 operand
 
 
 val li : register -> int -> text
+val lif : register -> int -> text
 val li32 : register -> int32 -> text
 (** Carregamento de constantes inteiras *)
 
@@ -142,9 +156,13 @@ val neg : register -> register -> text
 val addiu : register -> register -> 'a operand -> 'a -> text
 val add : register -> register -> 'a operand -> 'a -> text
 val sub : register -> register -> 'a operand -> 'a -> text
+val subs : register -> register -> register -> text
 val mul : register -> register -> 'a operand -> 'a -> text
+val muls : register -> register -> register -> text
 val rem : register -> register -> 'a operand -> 'a -> text
+val adds : register -> register -> register -> text
 val div : register -> register -> text
+val divs : register -> register -> register -> text
 
 (** As 5 operações aritméticas de base: [add rdst rsrc1 ospec o]
    alojar em rdst o resultado da operação entre rsrc1 e o. A
@@ -192,6 +210,9 @@ val bge : register -> register -> label -> text
 val bgt : register -> register -> label -> text
 val ble : register -> register -> label -> text
 val blt : register -> register -> label -> text
+val bc1f : label -> text
+val clt : register -> register -> text
+val cle : register -> register -> text
 val mflo : register -> text
 (** [bop ra rb label] salta para a etiqueta [label] se [ra op rb] *)
 
@@ -242,6 +263,10 @@ val sb : register -> 'a address -> 'a -> text
 val sw : register -> 'a address -> 'a -> text
 (** escrever o conteúdo do registo para o endereço dado *)
 val move : register -> register -> text
+
+val movs : register -> register -> text
+
+val mtc1 : register -> register -> text
 
 (** {1 Diversos } *)
 
