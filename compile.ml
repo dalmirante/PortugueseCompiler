@@ -94,10 +94,10 @@ let rec compile_expr ctxType = function
             let x = compile_expr ctxType e1 ++ movs f0 f12 in
             let y = compile_expr ctxType e2 ++ movs f1 f12 in
             match o with
-                Beq -> x ++ y ++ cle f1 f0 ++ bc1f "set_false" ++ li fp 1 ++ jal "print" ++ j alab ("continue" ^ expr_to_string (Cst (Int !contIfs))) ++ label "set_false" ++ li fp 0
-                | Leq -> x ++ y ++ cle f0 f1 ++ bc1f "set_false" ++ li fp 1 ++ jal "print" ++ j alab ("continue" ^ expr_to_string (Cst (Int !contIfs))) ++ label "set_false" ++ li fp 0
-                | Ls -> x ++ y ++ clt f0 f1 ++ bc1f "set_false" ++ li fp 1 ++ jal "print" ++ j alab ("continue" ^ expr_to_string (Cst (Int !contIfs))) ++ label "set_false" ++ li fp 0
-                | Bg -> x ++ y ++ cle f1 f0 ++ bc1f "set_false" ++ li fp 1 ++ jal "print" ++ j alab ("continue" ^ expr_to_string (Cst (Int !contIfs))) ++ label "set_false" ++ li fp 0
+                Beq -> x ++ y ++ cle f1 f0 ++ bc1f "set_false" ++ li v0 4 ++ li fp 1 ++ jal "print" ++ j alab ("continue" ^ expr_to_string (Cst (Int !contIfs))) ++ label "set_false" ++ li fp 0
+                | Leq -> x ++ y ++ cle f0 f1 ++ bc1f "set_false" ++ li v0 4 ++ li fp 1 ++ jal "print" ++ j alab ("continue" ^ expr_to_string (Cst (Int !contIfs))) ++ label "set_false" ++ li fp 0
+                | Ls -> x ++ y ++ clt f0 f1 ++ bc1f "set_false" ++ li v0 4 ++ li fp 1 ++ jal "print" ++ j alab ("continue" ^ expr_to_string (Cst (Int !contIfs))) ++ label "set_false" ++ li fp 0
+                | Bg -> x ++ y ++ cle f1 f0 ++ bc1f "set_false" ++ li v0 4 ++ li fp 1 ++ jal "print" ++ j alab ("continue" ^ expr_to_string (Cst (Int !contIfs))) ++ label "set_false" ++ li fp 0
                 | _ -> nop
         end
         | Tbool ->
@@ -131,20 +131,22 @@ let rec compile_stmt ctxType = function
     | If (e1, s1) -> 
     begin
         contIfs := !contIfs +1;
+        let x = !contIfs in
         let code = List.map (compile_stmt ctxType) s1 in
         let code = List.fold_right (++) code nop in
-            comment ("Valor " ^ expr_to_string (Cst(Int !contIfs)) ^ " em If") ++ compile_expr ctxType e1 ++ beq fp zero ("continue" ^ expr_to_string (Cst(Int !contIfs))) ++ code ++ label ("continue" ^ expr_to_string (Cst(Int !contIfs)))
+            comment "If condition" ++ compile_expr ctxType e1 ++ beq fp zero ("continue" ^ expr_to_string (Cst(Int x))) ++ code ++ label ("continue" ^ expr_to_string (Cst(Int x)))
     end
     | IfElse (e, s1, s2) ->
         contIfs := !contIfs +1;
+        let x = !contIfs in
         let stmt1 = List.map (compile_stmt ctxType) s1 in
         let stmt1 = List.fold_right (++) stmt1 nop in
         let stmt2 = List.map (compile_stmt ctxType) s2 in
         let stmt2 = List.fold_right (++) stmt2 nop in
-            comment ("Valor " ^ expr_to_string (Cst(Int !contIfs)) ^ " em IfElse") ++ compile_expr ctxType e ++ beq fp zero ("else" ^ expr_to_string (Cst(Int !contIfs))) ++ 
-                stmt1 ++ j alab ("exit" ^ expr_to_string (Cst(Int !contIfs))) ++ 
-                label ("else" ^ expr_to_string (Cst(Int !contIfs))) ++ 
-                stmt2 ++ label ("exit" ^ expr_to_string (Cst(Int !contIfs)))
+            comment "IfElse condition" ++compile_expr ctxType e ++ beq fp zero ("else" ^ expr_to_string (Cst(Int x))) ++ 
+                stmt1 ++ j alab ("exit" ^ expr_to_string (Cst(Int x))) ++ 
+                label ("else" ^ expr_to_string (Cst(Int x))) ++ 
+                stmt2 ++ label ("exit" ^ expr_to_string (Cst(Int x)))
     | Nop _ -> nop
                 
 

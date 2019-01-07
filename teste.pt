@@ -1,5 +1,10 @@
-se 1.0 < 2.0 entao
+se 1.0 > 2.0 entao
 (
     mostra verdade
 )
-testar
+senao
+(
+    mostra 2
+)
+testar;
+mostra 2.0 + 3.0
