@@ -1,54 +1,40 @@
 .text
 main:
 	addiu $sp, $sp, -8
-#IfElse condition
-	li $t0, 0x3f800000
-	mtc1 $t0, $f12
-	mov.s $f0, $f12
-	li $t0, 0x40000000
-	mtc1 $t0, $f12
-	mov.s $f1, $f12
-	c.le.s $f1, $f0
-	bc1f set_false
-	li $v0, 4
-	li $fp, 1
-	jal print
-	j continue2
-set_false:
-	li $fp, 0
-	beq $fp, $zero, else1
-#Showing verdade
-	li $v0, 4
-	li $t0, 1
-	li $fp, 1
-	jal print
-continue2:
-	syscall
-	la $a0, newline
-	li $v0, 4
-	syscall
-	j exit1
-else1:
-#Showing 2
+#Storing n
+	li $t0, 10
+	li $a0, 10
+	sw $a0, n
+#Valor 1 em While
+continue1:
+	lw $t0, n
+	lw $a0, n
+	sw $t0, 4($sp)
+	li $t0, 5
+	li $a0, 5
+	move $t1, $t0
+	lw $t0, 4($sp)
+	sgt $fp, $t0, $t1
+	beq $fp, $zero, exitWhile1
+#Showing n INT
 	li $v0, 1
-	li $t0, 2
-	li $a0, 2
+	lw $t0, n
+	lw $a0, n
 	syscall
 	la $a0, newline
 	li $v0, 4
 	syscall
-exit1:
-#Showing 2.+3.
-	li $v0, 2
-	li $t0, 0x40000000
-	mtc1 $t0, $f12
-	mov.s $f0, $f12
-	li $t0, 0x40400000
-	mtc1 $t0, $f12
-	mov.s $f1, $f12
-	add.s $f12, $f0, $f1
-	jal print
-	syscall
+#Storing n
+	lw $t0, n
+	lw $a0, n
+	sw $t0, 4($sp)
+	li $t0, 1
+	li $a0, 1
+	lw $t1, 4($sp)
+	sub $a0, $t1, $t0
+	sw $a0, n
+	b continue1
+exitWhile1:
 	j end
 print:
 	move $t4, $ra
@@ -72,6 +58,8 @@ prepare_return:
 end:
 	addiu $sp, $sp, 8
 .data
+n:
+	.space 4
 true:
 	.asciiz "verdade"
 false:

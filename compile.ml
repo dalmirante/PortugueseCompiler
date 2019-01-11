@@ -50,7 +50,8 @@ let rec compile_expr ctxType = function
              | _ -> li t0 0 ++ li fp 0
     end
     | Ident i ->
-        if Hashtbl.mem variables i then lw t0 alab i ++ lw a0 alab i else li a0 0
+        if Hashtbl.mem variables i then lw t0 alab i ++ lw a0 alab i else 
+        raise (Compile_Error ("Variable " ^ i ^ " not found!"))
     | Op (o, e1, e2) ->
         begin
             match type_expression ctxType e1 with
@@ -94,10 +95,10 @@ let rec compile_expr ctxType = function
             let x = compile_expr ctxType e1 ++ movs f0 f12 in
             let y = compile_expr ctxType e2 ++ movs f1 f12 in
             match o with
-                Beq -> x ++ y ++ cle f1 f0 ++ bc1f "set_false" ++ li v0 4 ++ li fp 1 ++ jal "print" ++ j alab ("continue" ^ expr_to_string (Cst (Int !contIfs))) ++ label "set_false" ++ li fp 0
-                | Leq -> x ++ y ++ cle f0 f1 ++ bc1f "set_false" ++ li v0 4 ++ li fp 1 ++ jal "print" ++ j alab ("continue" ^ expr_to_string (Cst (Int !contIfs))) ++ label "set_false" ++ li fp 0
-                | Ls -> x ++ y ++ clt f0 f1 ++ bc1f "set_false" ++ li v0 4 ++ li fp 1 ++ jal "print" ++ j alab ("continue" ^ expr_to_string (Cst (Int !contIfs))) ++ label "set_false" ++ li fp 0
-                | Bg -> x ++ y ++ cle f1 f0 ++ bc1f "set_false" ++ li v0 4 ++ li fp 1 ++ jal "print" ++ j alab ("continue" ^ expr_to_string (Cst (Int !contIfs))) ++ label "set_false" ++ li fp 0
+                Beq -> x ++ y ++ cle f1 f0 ++ bc1f "set_false" ++ li fp 1 ++ jal "print" ++ j alab ("continue" ^ expr_to_string (Cst (Int !contIfs))) ++ label "set_false" ++ li fp 0
+                | Leq -> x ++ y ++ cle f0 f1 ++ bc1f "set_false" ++ li fp 1 ++ jal "print" ++ j alab ("continue" ^ expr_to_string (Cst (Int !contIfs))) ++ label "set_false" ++ li fp 0
+                | Ls -> x ++ y ++ clt f0 f1 ++ bc1f "set_false" ++ li fp 1 ++ jal "print" ++ j alab ("continue" ^ expr_to_string (Cst (Int !contIfs))) ++ label "set_false" ++ li fp 0
+                | Bg -> x ++ y ++ cle f1 f0 ++ bc1f "set_false" ++ li fp 1 ++ jal "print" ++ j alab ("continue" ^ expr_to_string (Cst (Int !contIfs))) ++ label "set_false" ++ li fp 0
                 | _ -> nop
         end
         | Tbool ->
@@ -115,39 +116,83 @@ let rec compile_stmt ctxType = function
     Print x -> 
     begin
         match type_expression ctxType x with
-            Tint -> comment ( "Showing " ^ (expr_to_string x) )++ li v0 1 ++ (compile_expr ctxType x) ++ syscall ++ la a0 alab "newline" ++ li v0 4 ++ syscall
+            Tint -> comment ( "Showing " ^ (expr_to_string x) ^ " INT")++ li v0 1 ++ (compile_expr ctxType x) ++ syscall ++ la a0 alab "newline" ++ li v0 4 ++ syscall
             | Tbool -> 
             contIfs := !contIfs +1;
                 comment ("Showing " ^ (expr_to_string x) ) ++ li v0 4 ++ (compile_expr ctxType x) ++ jal "print" ++ label ("continue" ^ expr_to_string (Cst (Int !contIfs))) ++ syscall ++ la a0 alab "newline" ++ li v0 4 ++ syscall
-            | Tfloat -> comment ("Showing " ^ (expr_to_string x) ) ++ li v0 2 ++ compile_expr ctxType x ++ jal "print" ++ syscall
+            | Tfloat -> comment ("Showing " ^ (expr_to_string x) ) ++ li v0 2 ++ compile_expr ctxType x ++ jal "print" ++ syscall ++ la a0 alab "newline" ++ li v0 4 ++ syscall
             | _ -> nop
     end
 
     |Set (id, ex) ->
         let value = compile_expr ctxType ex in
-        let code = comment ("Storing " ^ id) ++ value ++ sw t0 alab id in
+        let code = comment ("Storing " ^ id) ++ value ++ sw a0 alab id in
             Hashtbl.replace variables id ();
             code;
     | If (e1, s1) -> 
     begin
         contIfs := !contIfs +1;
-        let x = !contIfs in
         let code = List.map (compile_stmt ctxType) s1 in
         let code = List.fold_right (++) code nop in
-            comment "If condition" ++ compile_expr ctxType e1 ++ beq fp zero ("continue" ^ expr_to_string (Cst(Int x))) ++ code ++ label ("continue" ^ expr_to_string (Cst(Int x)))
+            comment ("Valor " ^ expr_to_string (Cst(Int !contIfs)) ^ " em If") ++ compile_expr ctxType e1 ++ beq fp zero ("continue" ^ expr_to_string (Cst(Int !contIfs))) ++ code ++ label ("continue" ^ expr_to_string (Cst(Int !contIfs)))
     end
     | IfElse (e, s1, s2) ->
-        contIfs := !contIfs +1;
-        let x = !contIfs in
+        contIfs := !contIfs + 1;
         let stmt1 = List.map (compile_stmt ctxType) s1 in
         let stmt1 = List.fold_right (++) stmt1 nop in
         let stmt2 = List.map (compile_stmt ctxType) s2 in
         let stmt2 = List.fold_right (++) stmt2 nop in
-            comment "IfElse condition" ++compile_expr ctxType e ++ beq fp zero ("else" ^ expr_to_string (Cst(Int x))) ++ 
-                stmt1 ++ j alab ("exit" ^ expr_to_string (Cst(Int x))) ++ 
-                label ("else" ^ expr_to_string (Cst(Int x))) ++ 
-                stmt2 ++ label ("exit" ^ expr_to_string (Cst(Int x)))
-    | Nop _ -> nop
+            comment ("Valor " ^ expr_to_string (Cst(Int !contIfs)) ^ " em IfElse") ++ compile_expr ctxType e ++ beq fp zero ("else" ^ expr_to_string (Cst(Int !contIfs))) ++ 
+                stmt1 ++ j alab ("exit" ^ expr_to_string (Cst(Int !contIfs))) ++ 
+                label ("else" ^ expr_to_string (Cst(Int !contIfs))) ++ 
+                stmt2 ++ label ("exit" ^ expr_to_string (Cst(Int !contIfs)))
+    | While (e1, s1) -> 
+    begin
+        contIfs := !contIfs + 1;
+        let code = List.map (compile_stmt ctxType) s1 in
+        let code = List.fold_right (++) code nop in
+            comment ("Valor " ^ expr_to_string (Cst(Int !contIfs)) ^ " em While") ++ 
+            label("continue" ^ expr_to_string (Cst(Int (!contIfs)))) ++ 
+            compile_expr ctxType e1 ++ 
+            beq fp zero ("exitWhile" ^ expr_to_string (Cst(Int !contIfs))) ++ 
+            code ++ 
+            b ("continue" ^ expr_to_string (Cst(Int (!contIfs)))) ++ 
+            label ("exitWhile" ^ expr_to_string (Cst(Int (!contIfs))))
+    end
+    | DoWhile (s1, e1) -> 
+        begin
+            contIfs := !contIfs + 1;
+            let code = List.map (compile_stmt ctxType) s1 in
+            let code = List.fold_right (++) code nop in
+                comment ("Adicionar While") ++ 
+                label("continue" ^ expr_to_string (Cst(Int (!contIfs)))) ++ 
+                code ++ 
+                compile_expr ctxType e1 ++ 
+                beq fp zero ("exitWhile" ^ expr_to_string (Cst(Int !contIfs))) ++
+                b ("continue" ^ expr_to_string (Cst(Int (!contIfs)))) ++ 
+                label ("exitWhile" ^ expr_to_string (Cst(Int (!contIfs))))
+        end
+    | For(i, e, s) ->
+        begin
+            contIfs := !contIfs +1;
+            Hashtbl.replace variables i ();
+            let code = List.map (compile_stmt ctxType) s in
+            let code = List.fold_right (++) code nop in
+                comment "Adicionar FOR" ++
+                compile_expr ctxType e ++
+                beqz t0 ("ExitFOR" ^ expr_to_string(Cst(Int !contIfs))) ++
+                move t3 t0 ++
+                li a0 0 ++
+                sw a0 alab i ++
+                label("FOR" ^ expr_to_string(Cst(Int !contIfs))) ++
+                code ++
+                lw fp alab i ++
+                add fp fp oi 1 ++
+                sw fp alab i ++
+                bne fp t3 ("FOR" ^ expr_to_string(Cst(Int !contIfs)))++
+                label("ExitFOR" ^ expr_to_string(Cst(Int !contIfs)))
+        end
+    | _ -> nop
                 
 
 let compile_prog p ctxType = 

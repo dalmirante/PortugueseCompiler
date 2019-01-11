@@ -7,6 +7,7 @@
 %token PLUS MINUS TIMES DIV
 %token AND OR BEQ BIG LEQ LESS
 %token IF THEN ELSE SET PRINT TEST
+%token WHILE DONE DO FOR TO
 %token LP RP
 %token EQ SEMICOLON EOF
 
@@ -36,10 +37,13 @@ expr: c = CST                           { Cst c }
       ;
 
 
-stmt: PRINT e = expr                                        { Print e }
-    | SET i = IDENT EQ e = expr                             { Set(i, e) }
-    | IF e = expr THEN LP s = stmts RP TEST                        { If(e, List.rev s) }
-    | IF e = expr THEN LP s1 = stmts RP ELSE LP s2 = stmts RP TEST { IfElse(e, List.rev s1, List.rev s2) }
+stmt: PRINT e = expr                                                    { Print e }
+    | SET i = IDENT EQ e = expr                                         { Set(i, e) }
+    | IF e = expr THEN LP s = stmts RP TEST                             { If(e, List.rev s) }
+    | IF e = expr THEN LP s1 = stmts RP ELSE LP s2 = stmts RP TEST      { IfElse(e, List.rev s1, List.rev s2) }
+    | WHILE e = expr DO LP s = stmts RP DONE                            {While (e,List.rev s)}
+	| DO LP s = stmts  RP WHILE e = expr DONE							{DoWhile (List.rev s,e)}
+    | FOR i = IDENT TO e = expr DO LP s = stmts RP DONE                 {For(i, e, List.rev s)}
     ;
 
 %inline op:

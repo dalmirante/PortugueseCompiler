@@ -4,7 +4,8 @@
 
     exception Lexing_error of string
 
-    let kwd_tbl = ["se",IF; "entao",THEN; "senao",ELSE; "e",AND; "ou",OR; "def",SET; "mostra",PRINT;"testar",TEST; "verdade", CST (Bool true); "falso", CST (Bool false)]
+    let kwd_tbl = ["enquanto",WHILE; "se",IF; "entao",THEN; "senao",ELSE; "e",AND; "ou",OR; "def",SET; "mostra",PRINT;"testar",TEST;"feito",DONE;"faz",DO; "verdade", CST (Bool true); "falso", CST (Bool false);
+    "para", FOR; "ate", TO;]
 
     let id_or_kwd s =
         try List.assoc s kwd_tbl with _ -> IDENT s

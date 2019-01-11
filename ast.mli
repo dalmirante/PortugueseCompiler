@@ -15,5 +15,8 @@ type stmt =
     | Nop of unit
     | If of expr * seq
     | IfElse of expr * seq * seq
+    | While of expr * seq
+	| DoWhile of seq * expr
+    | For of string * expr * seq
 
 and seq = stmt list

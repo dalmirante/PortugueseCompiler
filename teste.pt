@@ -1,10 +1,7 @@
-se 1.0 > 2.0 entao
+def n = 10;
+enquanto n > 5 faz
 (
-    mostra verdade
+    mostra n;
+    def n = n -1
 )
-senao
-(
-    mostra 2
-)
-testar;
-mostra 2.0 + 3.0
+feito
