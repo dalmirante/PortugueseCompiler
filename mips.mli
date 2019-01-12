@@ -293,6 +293,8 @@ val asciiz : string -> data
 val dword : int list -> data
 (** coloca uma lista de palavras de memória na zona de dados *)
 
+val word : string -> data
+
 val address : label list -> data
 (** coloca uma lista de endereços (denotados pelas etiquetas) na zona
     de dados *)

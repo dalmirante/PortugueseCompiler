@@ -61,6 +61,10 @@ let () =
           localisation (Lexing.lexeme_start_p buf);
           eprintf "erro durante a tipagem: %s@." c;
           exit 1
+    | Compile.Compile_Error c ->
+          localisation (Lexing.lexeme_start_p buf);
+          eprintf "erro durante a compilação: %s@." c;
+          exit 1
 
 
 

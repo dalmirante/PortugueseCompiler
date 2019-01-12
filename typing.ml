@@ -7,6 +7,7 @@ type types =
 	| Tint
 	| Tbool
 	| Tfloat
+	| Tarray
 
 let analyse_cst = function
 	| Int _ -> Tint
@@ -18,6 +19,7 @@ let type_toString = function
 	Tint -> "INT"
 	| Tbool -> "BOOL"
 	| Tfloat -> "FLOAT"
+	| Tarray -> "ARRAY"
 	| Tnone -> ""
 
 let writeError a b =
@@ -53,6 +55,10 @@ let rec type_expression ctx = function
 		if( typee1 = Tint && typee2 = typee1) then typee1 
 		else if (typee1 = Tfloat && typee2 = typee1) then typee1
 		else (raise (Type_Error (writeError typee1 typee2)))
+	| Arr(id, i) -> 
+		match i with
+			Int _ -> Tint
+			| _ -> raise (Type_Error ("Esperava INT"))
 
 let rec stmt_type ctx = function
 	(* As stmt não têm tipo, ou seja, não retornam nada. PRINT é to tipo UNIT, só tenhos de virificar o que está à frente*)

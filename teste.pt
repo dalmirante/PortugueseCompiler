@@ -1,7 +1,6 @@
-def n = 10;
-enquanto n > 5 faz
+def x[3] = {1, 2, 3};
+para j ate x[1] faz
 (
-    mostra n;
-    def n = n -1
+    mostra j
 )
 feito

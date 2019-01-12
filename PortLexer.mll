@@ -20,7 +20,7 @@ let digit = ['0'-'9']
 let ident = letter (letter | digit | '_')*
 let integer = digit+
 let space = [' ' '\t']
-let floats = digit* + ['.'] + digit*
+let floats = digit+ + ['.'] + digit+
 
 rule token = parse
     | "\n" {newline lexbuf; token lexbuf}
@@ -38,6 +38,11 @@ rule token = parse
     | ">=" {BEQ}
     | ">" {BIG}
     | "<" {LESS}
+    | "[" {LRP}
+    | "]" {RRP}
+    | "{" {LB}
+    | "}" {RB}
+    | "," {COLON}
     | eof {EOF}
     | integer as i { CST (Int (int_of_string i) )}
     | floats as f { CST ( Float (float_of_string f) )}

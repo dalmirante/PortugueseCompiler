@@ -5,6 +5,7 @@ open Typing
 exception Compile_Error of string
 
 let (variables: (string, unit) Hashtbl.t) = Hashtbl.create 17 
+let (arrays: (string, string) Hashtbl.t) = Hashtbl.create 17
 let contIfs = ref 0
 
 let rec expr_to_string = function
@@ -39,6 +40,7 @@ Cst i ->
         | Bg -> (x ^ ">" ^ y)
         | Ls -> (x ^ "<" ^ y)
     end
+| _ -> ""
 
 let rec compile_expr ctxType = function
     Cst i -> 
@@ -78,6 +80,7 @@ let rec compile_expr ctxType = function
             | _ -> nop
         end
     | Bop (o, e1, e2) -> 
+    begin
         match type_expression ctxType e1 with
         | Tint ->
         begin
@@ -111,6 +114,11 @@ let rec compile_expr ctxType = function
                 | _ -> nop
         end
         | _ -> nop
+    end
+    | Arr (id, i)  -> if not (Hashtbl.mem arrays id) then raise (Compile_Error ("O vetor " ^ id ^ " não foi encontrado")) else
+                        match i with
+                            Int i -> la t1 alab id ++ lw t0 areg(4*i, t1) ++ lw a0 areg(4*i, t1)
+                            | _ -> nop
 
 let rec compile_stmt ctxType = function
     Print x -> 
@@ -192,6 +200,25 @@ let rec compile_stmt ctxType = function
                 bne fp t3 ("FOR" ^ expr_to_string(Cst(Int !contIfs)))++
                 label("ExitFOR" ^ expr_to_string(Cst(Int !contIfs)))
         end
+    | Arr (id, c1, c) ->
+    begin
+        match c1 with
+            Int i -> 
+                if List.length c != i then
+                    raise (Compile_Error ("Vetor tamanho " ^ string_of_int(i) ^ ", mas foi dado " ^ string_of_int(List.length c) ))
+                else
+                    let x = List.map (fun x ->
+                        match x with
+                            Int i -> string_of_int i
+                            | _ -> ""
+                            ) c
+                    in 
+                    let x = String.concat ", " x in
+                    Hashtbl.replace arrays id x;
+                    nop
+                    
+            | _ -> nop
+    end
     | _ -> nop
                 
 
@@ -225,8 +252,11 @@ let compile_prog p ctxType =
             j alab "print_false" ++
             label "end"++
             addiu sp sp oi 8;
+
         data =
-            Hashtbl.fold (fun x _ l -> label x ++ space 4 ++ l ) variables (label "true" ++ asciiz "verdade" ++ label "false" ++ asciiz "falso" ++ label "newline" ++ asciiz "\n")
+            Hashtbl.fold (fun x _ l -> label x ++ space 4 ++ l ) variables (label "true" ++ asciiz "verdade" ++ label "false" ++ asciiz "falso" ++ label "newline" ++ asciiz "\n") ++
+            Hashtbl.fold (fun x u l -> label x ++ word u ++ l) arrays nop;
+            
     } in
     let fle = open_out "test.asm" in
     let fmt = Format.formatter_of_out_channel fle in

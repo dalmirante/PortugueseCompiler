@@ -142,6 +142,7 @@ let comment s = S ("#" ^ s ^ "\n")
 let align n = ins ".align %i" n
 let asciiz s = ins ".asciiz %S" s
 let dword l = ins ".word %a" pr_ilist l
+let word l = ins ".word %s" l
 let address l = ins ".word %a" pr_alist l
 let space n = ins ".space %d" n
 let inline s = S s

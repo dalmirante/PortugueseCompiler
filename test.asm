@@ -1,40 +1,28 @@
 .text
 main:
 	addiu $sp, $sp, -8
-#Storing n
-	li $t0, 10
-	li $a0, 10
-	sw $a0, n
-#Valor 1 em While
-continue1:
-	lw $t0, n
-	lw $a0, n
-	sw $t0, 4($sp)
-	li $t0, 5
-	li $a0, 5
-	move $t1, $t0
-	lw $t0, 4($sp)
-	sgt $fp, $t0, $t1
-	beq $fp, $zero, exitWhile1
-#Showing n INT
+#Adicionar FOR
+	la $t1, x
+	lw $t0, 4($t1)
+	lw $a0, 4($t1)
+	beqz $t0, ExitFOR1
+	move $t3, $t0
+	li $a0, 0
+	sw $a0, j
+FOR1:
+#Showing j INT
 	li $v0, 1
-	lw $t0, n
-	lw $a0, n
+	lw $t0, j
+	lw $a0, j
 	syscall
 	la $a0, newline
 	li $v0, 4
 	syscall
-#Storing n
-	lw $t0, n
-	lw $a0, n
-	sw $t0, 4($sp)
-	li $t0, 1
-	li $a0, 1
-	lw $t1, 4($sp)
-	sub $a0, $t1, $t0
-	sw $a0, n
-	b continue1
-exitWhile1:
+	lw $fp, j
+	add $fp, $fp, 1
+	sw $fp, j
+	bne $fp, $t3, FOR1
+ExitFOR1:
 	j end
 print:
 	move $t4, $ra
@@ -58,7 +46,7 @@ prepare_return:
 end:
 	addiu $sp, $sp, 8
 .data
-n:
+j:
 	.space 4
 true:
 	.asciiz "verdade"
@@ -66,3 +54,5 @@ false:
 	.asciiz "falso"
 newline:
 	.asciiz "\n"
+x:
+	.word 1, 2, 3

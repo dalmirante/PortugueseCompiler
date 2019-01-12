@@ -8,6 +8,7 @@ type expr =
     | Ident of string
     | Op of op * expr * expr
     | Bop of bop * expr * expr
+    | Arr of string * cst
 
 type stmt =
     Print of expr
@@ -18,5 +19,7 @@ type stmt =
     | While of expr * seq
 	| DoWhile of seq * expr
     | For of string * expr * seq
+    | Arr of string * cst * nmrArray
 
 and seq = stmt list
+and nmrArray = cst list
